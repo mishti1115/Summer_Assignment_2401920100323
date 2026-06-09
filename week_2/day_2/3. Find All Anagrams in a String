@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        vector<int>ans;
+        if(s.length() < p.length()) {
+            return ans;
+        }
+        vector<int> map(26,0);
+        for(int i = 0; i < p.length(); i++) {
+            map[p[i] - 'a']++;
+            map[s[i]- 'a']--;
+        }
+        map[s[p.length()-1] - 'a']++;
+        int left = 0;
+        for(int i = p.length()-1; i<s.length(); i++) {
+            map[s[i] - 'a']--;
+            if(count(map.begin(), map.end(), 0) == 26) {
+                ans.push_back(left);
+            }
+            map[s[left] - 'a']++;
+            left++;
+        }
+        return ans ;
+    }
+};

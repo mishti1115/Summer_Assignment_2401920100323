@@ -1,23 +1,21 @@
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        int n = s.size();
-        int HashLen = 256;
-        int hash[HashLen];
-        for(int i = 0; i<HashLen; ++i) {
-            hash[i] = -1;
-        }
-        int l = 0,r=0,maxLen = 0;
-        while(r<n) {
-            if(hash[s[r]] != -1) {
-                l = max(hash[s[r]]+1, l);
+        unordered_map<char, int> mp;
 
-            }
-            int len = r-l+1;
-            maxLen = max(len,maxLen);
-            hash[s[r]] = r;
-            r++;
+        int left = 0;
+        int ans = 0;
+
+        for(int right = 0; right < s.size(); right++) {
+
+            if(mp.find(s[right]) != mp.end() && mp[s[right]] >= left)
+                left = mp[s[right]] + 1;
+
+            mp[s[right]] = right;
+
+            ans = max(ans, right - left + 1);
         }
-        return maxLen;
+
+        return ans;
     }
 };

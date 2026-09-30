@@ -1,12 +1,18 @@
 class Solution {
-    public:
-        bool canConstruct(string ransomNote, string magazine) {
-              int alp[26] = {};
-                    for(char c : magazine) alp[c - 'a']++;
-                          for(char c : ransomNote) {
-                                  if(!alp[c- 'a']--) 
-                                          return false;
-                                                }
-                                                      return true;
-                                                          }
-                                                          };
+public:
+    bool canConstruct(string ransomNote, string magazine) {
+        int freq[26] = {};
+
+        for (char c : magazine)
+            freq[c - 'a']++;
+
+        for (char c : ransomNote) {
+            if (freq[c - 'a'] == 0)
+                return false;
+
+            freq[c - 'a']--;
+        }
+
+        return true;
+    }
+};
